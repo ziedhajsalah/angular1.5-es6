@@ -1,6 +1,7 @@
 'use strict'
 
 import gulp from 'gulp'
+import webpack from 'webpack-stream'
 import path from 'path'
 import sync from 'run-sequence'
 import browserSync from 'browser-sync'
@@ -31,6 +32,12 @@ gulp.task('reload', done => {
   done()
 })
 
+gulp.task('webpack', () => {
+  return gulp.src(paths.entry)
+    .pipe(webpack(require('./webpack.config.js')))
+    .pipe(gulp.dest(paths.output))
+})
+
 gulp.task('serve', () => {
   browserSync({
     port: process.env.PORT || 3000,
@@ -41,7 +48,9 @@ gulp.task('serve', () => {
 
 gulp.task('watch', ['serve'], () => {
   let allPaths = [].concat([paths.js], paths.html, [paths.styl])
-  gulp.watch(allPaths, ['reload'])
+  gulp.watch(allPaths, ['webpack', 'reload'])
 })
 
-gulp.task('default', ['watch'])
+gulp.task('default', (done) => {
+  sync('webpack', 'serve', 'watch', done)
+})
