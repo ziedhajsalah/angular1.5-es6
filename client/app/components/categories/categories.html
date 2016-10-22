@@ -3,8 +3,8 @@
 </span>
 
 <ul class="nav nav-sidebar">
-  <li class="category-item">Category Item</li>
-  <li class="category-item">Category Item</li>
-  <li class="category-item">Category Item</li>
-  <li class="category-item">Category Item</li>
+  <li class="category-item"
+    ng-repeat="category in  categoriesListCtrl.categories">
+    {{ category.name }}
+  </li>
 </ul>
