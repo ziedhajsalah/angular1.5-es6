@@ -1,7 +1,10 @@
 class CategoriesController {
   constructor (CategoriesModel) {
     'ngInject'
-    this.categories = CategoriesModel.categories
+    CategoriesModel.getCategories()
+      .then(result => {
+        this.categories = result
+      })
   }
 }
 
