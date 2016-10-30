@@ -1,8 +1,9 @@
 class CategoriesModel {
-  constructor ($q) {
+  constructor ($q, $rootScope) {
     'ngInject'
 
     this.$q = $q
+    this.$rootScope = $rootScope
     this.categories = [
       {'id': 0, 'name': 'Development'},
       {'id': 1, 'name': 'Design'},
@@ -17,6 +18,7 @@ class CategoriesModel {
   }
   setCurrentCategory (category) {
     this.currentCategory = category
+    this.$rootScope.$broadcast('onCurrentCategoryUpdated')
   }
   getCurrentCategory () {
     return this.currentCategory
